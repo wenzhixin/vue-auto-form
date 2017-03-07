@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     onChange(e) {
-      this.$emit('change', +e.target.value)
+      this.$emit('change', e.target.value !== '' ? +e.target.value : undefined)
     }
   }
 }

@@ -14,7 +14,7 @@ import moment from 'moment'
 import Schema from '../schema'
 import bootstrap3 from '../inputTypes'
 import element from '../templates/element-ui/inputTypes'
-import { closest } from '../utils'
+import { closest, getType } from '../utils'
 
 const Components = {
   bootstrap3,
@@ -26,8 +26,7 @@ const DATE_FORMAT = 'YYYY-MM-DD'
 export default {
   props: {
     name: String,
-    input: Object,
-    modelType: String
+    input: Object
   },
   data() {
     return {
@@ -37,12 +36,8 @@ export default {
   mounted() {
     this.updateDefaultValue(this.input)
   },
-  beforeDestroy() {
-    try {
-      if (this.modelType === 'array') {
-        this.form.model[this.name].splice(this.getIndex(), 1)
-      }
-    } catch (e) {}
+  destroyed() {
+    delete this.form.formModel[this.name]
   },
   computed: {
     form() {
@@ -53,7 +48,7 @@ export default {
       return parent
     },
     type() {
-      let type = Schema.getType(this.input)
+      let type = getType(this.input)
       return type ? this.getComponent(type) : undefined
     },
     disabled() {
@@ -64,18 +59,9 @@ export default {
     }
   },
   methods: {
-    getIndex() {
-      let el = closest(this.$el, '[data-index]')
-      return el && el.getAttribute('data-index')
-    },
     onChange(val) {
-      if (this.modelType === 'array' && this.getIndex()) {
-        this.form.model[this.name][this.getIndex()] = val
-        this.form.validateInput(this.name, this.getIndex())
-      } else {
-        this.form.model[this.name] = val
-        this.form.validateInput(this.name)
-      }
+      this.form.formModel[this.name] = val
+      this.form.validateInput(this.name, val, this.input)
     },
     getComponent(name) {
       let template = this.form.getTemplate()
@@ -86,15 +72,7 @@ export default {
     },
     updateDefaultValue(val) {
       this.currentValue = this.formatValue(val.defaultValue)
-
-      if (this.modelType === 'array') {
-        if (!this.form.model[this.name]) {
-          this.form.model[this.name] = []
-        }
-        this.form.model[this.name].push(this.currentValue)
-      } else {
-        this.form.model[this.name] = this.currentValue
-      }
+      this.form.formModel[this.name] = this.currentValue
     },
     formatInput(val) {
       let input = _.cloneDeep(val)

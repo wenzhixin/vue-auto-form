@@ -3,16 +3,15 @@
   <div class="panel-heading">{{input.label}}</div>
   <ul class="list-group">
     <li class="list-group-item"
-      :data-index="i"
       v-for="(item, i) in list"
-      :key="item.key_">
-      <div class="left" v-if="input.optional === true || list.length > 1">
+      :key="name + '.' + i">
+      <div class="left" v-if="showDelete">
         <button type="button" class="btn btn-primary" @click="onMinus(i)">
           <i class="glyphicon glyphicon-minus"></i>
         </button>
       </div>
-      <div :class="{right: input.optional === true || list.length > 1}">
-        <slot :input="item" :index="i"></slot>
+      <div :class="{right: showDelete}">
+        <slot :input="item" :name_="name + '.' + i"/>
       </div>
     </li>
     <li class="list-group-item">
@@ -32,20 +31,41 @@ export default {
   },
   data() {
     return {
-      list: this.input.optional === true ? [] : [this.cloneItem()]
+      index: 0,
+      list: {}
+    }
+  },
+  mounted() {
+    this.reset()
+  },
+  computed: {
+    showDelete() {
+      return this.input.optional === true ||
+        Object.keys(this.list).length > 1
     }
   },
   methods: {
     cloneItem() {
-      let item = _.clone(this.input.$)
-      item.key_ = +new Date()
-      return item
+      return _.clone(this.input.$)
+    },
+    reset() {
+      this.index = 0
+      this.list = {}
+      this.list[this.index++] = this.cloneItem()
+      this.list = Object.assign({}, this.list)
     },
     onPlus() {
-      this.list.push(this.cloneItem())
+      this.list[this.index++] = this.cloneItem()
+      this.list = Object.assign({}, this.list)
     },
     onMinus(i) {
-      this.list.splice(i, 1)
+      delete this.list[i]
+      this.list = Object.assign({}, this.list)
+    }
+  },
+  watch: {
+    input(val) {
+      this.reset()
     }
   }
 }

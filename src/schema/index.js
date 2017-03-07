@@ -75,7 +75,7 @@ export default {
       })
     }
     if (input.$) {
-      if (input.$.type === Object) {
+      if (input.type === Object || input.$.type === Object) {
         input.$ = this.getDefaults(input.$)
       } else {
         input.$ = this.getDefault(Messages.thisField, input.$)
@@ -104,43 +104,6 @@ export default {
       showType: undefined, // 'insert' or 'update'
       disableType: undefined // 'insert' or 'update'
     })
-  },
-  getType(input) {
-    if (!input) {
-      return
-    }
-    if (input.type === String) {
-      if (input.rows === +input.rows) {
-        return 'InputTextarea'
-      }
-      if (input.values.length) {
-        return 'SelectString'
-      }
-      return 'InputText'
-    }
-    if (input.type === Number) {
-      if (input.values.length) {
-        return 'SelectNumber'
-      }
-      return 'InputNumber'
-    }
-    if (input.type === Boolean) {
-      if (input.inputType === 'radio') {
-        return 'InputRadio'
-      }
-      if (input.inputType === 'select') {
-        return 'SelectBoolean'
-      }
-      return 'InputCheckbox'
-    }
-    if (input.type === Date) {
-      return 'InputDate'
-    }
-    if (input.type === Array) {
-      if (input.values.length) {
-        return 'SelectArray'
-      }
-    }
   },
   validate(value, input) {
     if (!input.optional &&

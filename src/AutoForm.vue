@@ -15,6 +15,25 @@
         :error="errors[name]"/>
     </div>
 
+    <div :is="getComponent('ObjectGroup')"
+      v-if="isShow(input) && getGroup(input) === 'object'"
+      :input="input"
+      :name="name">
+      <template scope="props">
+        <div :is="getComponent('FormGroup')"
+          :error="errors[props.name_]">
+          <div :is="getComponent('LabelField')"
+            :input="props.input"
+            :name="props.name_"
+            v-if="showLable(props.input)"/>
+          <div :is="getComponent('InputField')"
+            :input="props.input" :name="props.name_"/>
+          <div :is="getComponent('HelpField')"
+            :error="errors[props.name_]"/>
+        </div>
+      </template>
+    </div>
+
     <div :is="getComponent('ArrayGroup')"
       v-if="isShow(input) && getGroup(input) === 'array'"
       :input="input"
@@ -22,13 +41,12 @@
       <template scope="props">
         <div :is="getComponent('FormGroup')"
           v-if="isShow(props.input)"
-          :error="errors[name + '__' + props.index]">
+          :error="errors[props.name_]">
           <div :is="getComponent('InputField')"
             :input="props.input"
-            :name="name"
-            modelType="array"/>
+            :name="props.name_"/>
           <div :is="getComponent('HelpField')"
-            :error="errors[name + '__' + props.index]"/>
+            :error="errors[props.name_]"/>
         </div>
       </template>
     </div>
@@ -46,8 +64,10 @@
 <script>
 import _ from 'lodash'
 import sprintf from 'sprintf'
+import { flatten, unflatten } from 'flat'
 import Schema from './schema'
 import Locales from './locales'
+import { getType, getInput, updateModel } from './utils'
 
 // components
 import bootstrap3 from './components'
@@ -93,6 +113,7 @@ export default {
   },
   data() {
     return {
+      formModel: flatten(this.model),
       formSchema: Schema.getDefaults(this.schema, this.model),
       errors: {}
     }
@@ -119,10 +140,10 @@ export default {
       return Components.bootstrap3[name]
     },
     getGroup(input) {
-      if (Schema.getType(input)) {
+      if (getType(input)) {
         return 'form'
       }
-      if (input.type === Array && Schema.getType(input.$)) {
+      if (input.type === Array && getType(input.$)) {
         return 'array'
       }
       if (input.type === Object) {
@@ -143,29 +164,14 @@ export default {
     },
     validate(callback) {
       let valid = true
-      for (name in this.formSchema) {
-        let input = this.formSchema[name]
-        if (!this.isShow(input)) {
-          continue
-        }
-        if (this.getGroup(input) === 'array') {
-          (this.model[name] || []).forEach((value, i) => {
-            valid = this.validateInput(name, i) && valid
-          })
-        } else {
-          valid = this.validateInput(name) && valid
-        }
-      }
+      this.$el.querySelectorAll('[name]').forEach(el => {
+        let input = getInput(this.formSchema, el.name)
+        valid = this.validateInput(el.name,
+          this.formModel[el.name], input) && valid
+      })
       callback(valid)
     },
-    validateInput(name, index) {
-      let value = this.model[name]
-      let input = this.formSchema[name]
-      if (index !== undefined) {
-        value = this.model[name][index]
-        input = this.formSchema[name].$
-        name = name + '__' + index
-      }
+    validateInput(name, value, input) {
       let error = Schema.validate(value, input)
       if (error) {
         this.errors[name] = error
@@ -179,10 +185,12 @@ export default {
       if (e) e.preventDefault()
       this.validate(valid => {
         if (valid) {
+          updateModel(this.model, unflatten(this.formModel))
           this.$emit('submit')
         } else {
           this.$nextTick(() => {
-            this.$el.querySelectorAll('[form-group-error] [name]')[0].focus()
+            let el = this.$el.querySelectorAll('[form-group-error] [name]')
+            if (el && el[0]) el[0].focus()
           })
         }
       })
@@ -202,6 +210,7 @@ export default {
       this.reset()
     },
     model(val) {
+      this.formModel = flatten(val)
       this.formSchema = Schema.getDefaults(this.schema, val)
       this.reset()
     }
