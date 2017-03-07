@@ -1,5 +1,7 @@
 <template>
-<div class="el-form-item" :class="{'is-error': error}">
+<div class="el-form-item"
+  :class="{'is-error': error}"
+  :form-group-error="error">
   <div class="el-input">
     <slot></slot>
   </div>

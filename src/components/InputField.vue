@@ -92,10 +92,8 @@ export default {
           this.form.model[this.name] = []
         }
         this.form.model[this.name].push(this.currentValue)
-        this.$el.setAttribute('data-name', this.name + '__' + this.getIndex())
       } else {
         this.form.model[this.name] = this.currentValue
-        this.$el.setAttribute('data-name', this.name)
       }
     },
     formatInput(val) {

@@ -1,5 +1,7 @@
 <template>
-<div class="form-group" :class="{'has-error': error}">
+<div class="form-group"
+  :class="{'has-error': error}"
+  :form-group-error="error">
   <slot></slot>
 </div>
 </template>

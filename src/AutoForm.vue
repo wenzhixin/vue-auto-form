@@ -32,13 +32,14 @@
         </div>
       </template>
     </div>
-
-    <div :is="getComponent('FormGroup')" v-if="showSubmit">
-      <div :is="getComponent('Submit')"
-        :label="getLabel('submit')"/>
-    </div>
   </template>
-  <slot v-else></slot>
+
+  <div :is="getComponent('FormGroup')" v-if="auto && showSubmit">
+    <div :is="getComponent('Submit')"
+      :label="getLabel('submit')"/>
+  </div>
+
+  <slot v-if="!auto"></slot>
 </form>
 </template>
 
@@ -180,9 +181,9 @@ export default {
         if (valid) {
           this.$emit('submit')
         } else {
-          let name = _.keys(this.errors)[0]
-          name = sprintf('[data-name="%s"]', name)
-          this.$el.querySelectorAll(name)[0].focus()
+          this.$nextTick(() => {
+            this.$el.querySelectorAll('[form-group-error] [name]')[0].focus()
+          })
         }
       })
       return false
