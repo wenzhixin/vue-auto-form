@@ -50,6 +50,33 @@
         </div>
       </template>
     </div>
+
+    <div :is="getComponent('ArrayGroup')"
+      v-if="isShow(input) && getGroup(input) === 'array_object'"
+      :input="input"
+      :name="name">
+      <template scope="props1">
+        <div :is="getComponent('ObjectGroup')"
+          v-if="isShow(props1.input)"
+          :input="props1.input"
+          :name="props1.name_"
+          :showLable="false">
+          <template scope="props2">
+            <div :is="getComponent('FormGroup')"
+              :error="errors[props2.name_]">
+              <div :is="getComponent('LabelField')"
+                :input="props2.input"
+                :name="props2.name_"
+                v-if="showLable(props2.input)"/>
+              <div :is="getComponent('InputField')"
+                :input="props2.input" :name="props2.name_"/>
+              <div :is="getComponent('HelpField')"
+                :error="errors[props2.name_]"/>
+            </div>
+          </template>
+        </div>
+      </template>
+    </div>
   </template>
 
   <div :is="getComponent('FormGroup')" v-if="auto && showSubmit">
@@ -143,8 +170,11 @@ export default {
       if (getType(input)) {
         return 'form'
       }
-      if (input.type === Array && getType(input.$)) {
-        return 'array'
+      if (input.type === Array) {
+        if (getType(input.$)) {
+          return 'array'
+        }
+        return 'array_object'
       }
       if (input.type === Object) {
         return 'object'

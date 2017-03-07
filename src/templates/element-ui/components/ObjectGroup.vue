@@ -1,6 +1,6 @@
 <template>
 <div class="el-card box-card">
-  <div class="el-card__header">{{input.label}}</div>
+  <div class="el-card__header" v-if="showLable">{{input.label}}</div>
   <div class="el-card__body">
     <slot v-for="(input, name_) in input.$"
       :input="input" :name_="name + '.' + name_"/>
@@ -12,7 +12,11 @@
 export default {
   props: {
     name: String,
-    input: Object
+    input: Object,
+    showLable: {
+      type: Boolean,
+      default: true
+    }
   }
 }
 </script>

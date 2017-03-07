@@ -75,7 +75,7 @@ export default {
       })
     }
     if (input.$) {
-      if (input.type === Object || input.$.type === Object) {
+      if (input.type === Object) {
         input.$ = this.getDefaults(input.$)
       } else {
         input.$ = this.getDefault(Messages.thisField, input.$)

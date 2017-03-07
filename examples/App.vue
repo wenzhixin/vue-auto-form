@@ -331,10 +331,84 @@ export default {
             }
           }
         }
+      },
+      {
+        title: 'Array of object fields',
+        schema: {
+          columns: {
+            type: Array,
+            $: {
+              type: Object,
+              $: {
+                name: String
+              }
+            }
+          }
+        }
+      },
+      {
+        title: 'Complex example',
+        schema: {
+          table: {
+            type: String
+          },
+          columns: {
+            type: Array,
+            $: {
+              type: Object,
+              $: {
+                name: {
+                  type: String
+                },
+                type: {
+                  type: String
+                },
+                length: {
+                  type: Number
+                },
+                precision: {
+                  type: Number,
+                  optional: true
+                },
+                notNull: {
+                  type: Boolean,
+                  optional: true
+                },
+                isUnique: {
+                  type: Boolean,
+                  optional: true
+                },
+                isPrimarykey: {
+                  type: Boolean,
+                  optional: true
+                }
+              }
+            }
+          },
+          distributed: {
+            type: Object,
+            $: {
+              method: {
+                type: Number,
+                values: [{
+                  value: 0,
+                  label: 'DISTRIBUTED RANDOMLY'
+                }, {
+                  value: 1,
+                  label: 'DISTRIBUTED by key'
+                }]
+              },
+              key: {
+                type: String,
+                optional: true
+              }
+            }
+          }
+        }
       }
     ]
     return {
-      example: examples[examples.length - 1],
+      example: examples[0],
       examples: examples,
       form: {}
     }
