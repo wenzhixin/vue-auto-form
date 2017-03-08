@@ -15,6 +15,25 @@
               Select one of the predefined examples to see what happens.
             </p>
             <div class="form-group">
+              <label class="control-label">Themes</label>
+              <select class="form-control"
+                v-model="template"
+                @change="changeTemplate">
+                <option value="bootstrap3">Bootstrap3</option>
+                <option value="element">Element UI</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Locales</label>
+              <select class="form-control"
+                v-model="locale"
+                @change="changeLocale">
+                <option value="en_us">English</option>
+                <option value="zh_cn">Chinese</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Schema</label>
               <select class="form-control" v-model="example" @change="onChange">
                 <option :value="e" v-for="(e, i) in examples">
                   {{e.title}}
@@ -43,7 +62,12 @@
 <script>
 import AutoForm from '../src'
 
-// AutoForm.setTemplate('element')
+if (localStorage['template'] === 'element') {
+  AutoForm.setTemplate('element')
+}
+if (localStorage['locale'] === 'zh_cn') {
+  AutoForm.setLocale('zh_cn')
+}
 
 export default {
   components: {
@@ -395,7 +419,7 @@ export default {
                   label: 'DISTRIBUTED RANDOMLY'
                 }, {
                   value: 1,
-                  label: 'DISTRIBUTED by key'
+                  label: 'DISTRIBUTED BY KEY'
                 }]
               },
               key: {
@@ -408,12 +432,22 @@ export default {
       }
     ]
     return {
+      template: localStorage['template'] || 'bootstrap3',
+      locale: localStorage['locale'] || 'en_us',
       example: examples[0],
       examples: examples,
       form: {}
     }
   },
   methods: {
+    changeTemplate(e) {
+      localStorage['template'] = e.target.value
+      location.reload()
+    },
+    changeLocale(e) {
+      localStorage['locale'] = e.target.value
+      location.reload()
+    },
     onChange() {
       this.form = {}
     },
@@ -427,6 +461,7 @@ export default {
         String,
         Number,
         Boolean,
+        Date,
         Array,
         Object,
         'AutoForm.Schema.RegEx.Url': AutoForm.Schema.RegEx.Url
