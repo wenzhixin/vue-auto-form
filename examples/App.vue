@@ -20,6 +20,7 @@
                 v-model="template"
                 @change="changeTemplate">
                 <option value="bootstrap3">Bootstrap3</option>
+                <option value="bootstrap3_horizontal">Bootstrap3 Horizontal</option>
                 <option value="element">Element UI</option>
               </select>
             </div>
@@ -62,11 +63,11 @@
 <script>
 import AutoForm from '../src'
 
-if (localStorage['template'] === 'element') {
-  AutoForm.setTemplate('element')
+if (localStorage['template']) {
+  AutoForm.setTemplate(localStorage['template'])
 }
-if (localStorage['locale'] === 'zh_cn') {
-  AutoForm.setLocale('zh_cn')
+if (localStorage['locale']) {
+  AutoForm.setLocale(localStorage['locale'])
 }
 
 export default {
@@ -434,7 +435,7 @@ export default {
     return {
       template: localStorage['template'] || 'bootstrap3',
       locale: localStorage['locale'] || 'en_us',
-      example: examples[0],
+      example: examples[+localStorage['example'] || 0],
       examples: examples,
       form: {}
     }
@@ -448,7 +449,9 @@ export default {
       localStorage['locale'] = e.target.value
       location.reload()
     },
-    onChange() {
+    onChange(e) {
+      let index = this.examples.indexOf(this.example)
+      localStorage['example'] = index
       this.form = {}
     },
     onSubmit() {

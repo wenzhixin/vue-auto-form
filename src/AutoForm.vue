@@ -1,18 +1,23 @@
 <template>
-<form @submit="onSubmit">
+<form @submit="onSubmit" :class="formClass">
   <template v-if="auto"
     v-for="(input, name) in formSchema">
     <div :is="getComponent('FormGroup')"
       v-if="isShow(input) && getGroup(input) === 'form'"
+      :input="input"
       :error="errors[name]">
       <div :is="getComponent('LabelField')"
         :input="input"
         :name="name"
+        slot="label"
         v-if="showLable(input)"/>
       <div :is="getComponent('InputField')"
-        :input="input" :name="name"/>
-      <div :is="getComponent('HelpField')"
-        :error="errors[name]"/>
+        :input="input"
+        :name="name"/>
+      <div
+        :is="getComponent('HelpField')"
+        :error="errors[name]"
+        slot="help"/>
     </div>
 
     <div :is="getComponent('ObjectGroup')"
@@ -21,15 +26,18 @@
       :name="name">
       <template scope="props">
         <div :is="getComponent('FormGroup')"
+          :input="props.input"
           :error="errors[props.name_]">
           <div :is="getComponent('LabelField')"
             :input="props.input"
             :name="props.name_"
+            slot="label"
             v-if="showLable(props.input)"/>
           <div :is="getComponent('InputField')"
             :input="props.input" :name="props.name_"/>
           <div :is="getComponent('HelpField')"
-            :error="errors[props.name_]"/>
+            :error="errors[props.name_]"
+            slot="help"/>
         </div>
       </template>
     </div>
@@ -41,12 +49,14 @@
       <template scope="props">
         <div :is="getComponent('FormGroup')"
           v-if="isShow(props.input)"
+          :input="props.input"
           :error="errors[props.name_]">
           <div :is="getComponent('InputField')"
             :input="props.input"
             :name="props.name_"/>
           <div :is="getComponent('HelpField')"
-            :error="errors[props.name_]"/>
+            :error="errors[props.name_]"
+            slot="help"/>
         </div>
       </template>
     </div>
@@ -63,15 +73,18 @@
           :showLable="false">
           <template scope="props2">
             <div :is="getComponent('FormGroup')"
+              :input="props2.input"
               :error="errors[props2.name_]">
               <div :is="getComponent('LabelField')"
                 :input="props2.input"
                 :name="props2.name_"
+                slot="label"
                 v-if="showLable(props2.input)"/>
               <div :is="getComponent('InputField')"
                 :input="props2.input" :name="props2.name_"/>
               <div :is="getComponent('HelpField')"
-                :error="errors[props2.name_]"/>
+                :error="errors[props2.name_]"
+                slot="help"/>
             </div>
           </template>
         </div>
@@ -79,7 +92,8 @@
     </div>
   </template>
 
-  <div :is="getComponent('FormGroup')" v-if="auto && showSubmit">
+  <div :is="getComponent('FormGroup')"
+    v-if="auto && showSubmit">
     <div :is="getComponent('Submit')"
       :label="getLabel('submit')"/>
   </div>
@@ -98,10 +112,12 @@ import { getType, getInput, updateModel } from './utils'
 
 // components
 import bootstrap3 from './components'
+import bootstrap3_horizontal from './templates/bootstrap3-horizontal/components'
 import element from './templates/element-ui/components'
 
 const Components = {
   bootstrap3,
+  bootstrap3_horizontal,
   element
 }
 let template = 'bootstrap3'
@@ -149,6 +165,9 @@ export default {
     this.reset()
   },
   computed: {
+    formClass() {
+      return Components[template].formClass
+    },
     locale() {
       return Schema.Messages
     },

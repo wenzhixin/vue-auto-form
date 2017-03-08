@@ -79,6 +79,7 @@ export default {
         input.$ = this.getDefaults(input.$)
       } else {
         input.$ = this.getDefault(Messages.thisField, input.$)
+        input.$.parent = input
       }
     }
 

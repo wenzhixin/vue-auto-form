@@ -13,11 +13,13 @@
 import moment from 'moment'
 import Schema from '../schema'
 import bootstrap3 from '../inputTypes'
+import bootstrap3_horizontal from '../templates/bootstrap3-horizontal/inputTypes'
 import element from '../templates/element-ui/inputTypes'
 import { closest, getType } from '../utils'
 
 const Components = {
   bootstrap3,
+  bootstrap3_horizontal,
   element
 }
 
