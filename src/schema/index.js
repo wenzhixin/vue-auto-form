@@ -49,8 +49,9 @@ export default {
   },
   getDefaults(schema, defaults = {}) {
     let obj = {}
+    schema = _.cloneDeep(schema)
     for (let name in schema) {
-      obj[name] = this.getDefault(name, _.clone(schema[name]), defaults[name])
+      obj[name] = this.getDefault(name, schema[name], defaults[name])
     }
     return obj
   },

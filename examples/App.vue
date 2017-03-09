@@ -365,7 +365,9 @@ export default {
             $: {
               type: Object,
               $: {
-                name: String
+                name: {
+                  type: String
+                }
               }
             }
           }
