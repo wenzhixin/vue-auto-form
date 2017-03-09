@@ -2,8 +2,15 @@
 <div>
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/">Auto Form Examples</a>
+      <a class="navbar-brand" href="javascript:">Auto Form Examples</a>
     </div>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="https://github.com/wenzhixin/vue-auto-form" target="_blank">
+          Documentation
+        </a>
+      </li>
+    </ul>
   </div>
   <div class="container">
     <div class="row">
