@@ -24,9 +24,9 @@ export default {
     disabled: Boolean
   },
   methods: {
-    onChange(e) {
-      this.$emit('change', e.target.value === '' ?
-        '' : +e.target.value)
+    onChange (e) {
+      this.$emit('change', e.target.value === ''
+        ? '' : +e.target.value)
     }
   }
 }

@@ -23,15 +23,15 @@ export default {
   expectedObject: '%(label)s必须为对象',
   expectedConstructor: '%(label)s必须是一个%(type)s',
   regEx: [
-    {msg: '请输入正确的%(label)s'},
-    {exp: 'Email', msg: '%(label)s必须是一个有效的邮件地址'},
-    {exp: 'Domain', msg: '%(label)s必须是一个有效的域名'},
-    {exp: 'WeakDomain', msg: '%(label)s必须是一个有效的域名'},
-    {exp: 'IP', msg: '%(label)s必须是有效的IPv4或者IPv6地址'},
-    {exp: 'IPv4', msg: '%(label)s必须是有效的IPv4或者IPv6地址'},
-    {exp: 'IPv6', msg: '%(label)s必须是有效的IPv4或者IPv6地址'},
-    {exp: 'Url', msg: '%(label)s必须是有效的URL'},
-    {exp: 'Id', msg: '%(label)s必须是一个有效的数字ID'}
+    { msg: '请输入正确的%(label)s' },
+    { exp: 'Email', msg: '%(label)s必须是一个有效的邮件地址' },
+    { exp: 'Domain', msg: '%(label)s必须是一个有效的域名' },
+    { exp: 'WeakDomain', msg: '%(label)s必须是一个有效的域名' },
+    { exp: 'IP', msg: '%(label)s必须是有效的IPv4或者IPv6地址' },
+    { exp: 'IPv4', msg: '%(label)s必须是有效的IPv4或者IPv6地址' },
+    { exp: 'IPv6', msg: '%(label)s必须是有效的IPv4或者IPv6地址' },
+    { exp: 'Url', msg: '%(label)s必须是有效的URL' },
+    { exp: 'Id', msg: '%(label)s必须是一个有效的数字ID' }
   ],
   keyNotInSchema: '%(key)s在模式中不允许'
 }

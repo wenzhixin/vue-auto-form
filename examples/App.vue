@@ -70,19 +70,19 @@
 <script>
 import AutoForm from '../src'
 
-if (localStorage['template']) {
-  AutoForm.setTemplate(localStorage['template'])
+if (window.localStorage['template']) {
+  AutoForm.setTemplate(window.localStorage['template'])
 }
-if (localStorage['locale']) {
-  AutoForm.setLocale(localStorage['locale'])
+if (window.localStorage['locale']) {
+  AutoForm.setLocale(window.localStorage['locale'])
 }
 
 export default {
   components: {
     AutoForm
   },
-  data() {
-    let examples = [
+  data () {
+    const examples = [
       {
         title: 'One required string field',
         schema: {
@@ -251,30 +251,30 @@ export default {
           colors: {
             type: Array,
             values: [
-               {
-                  label: 'Red',
-                  value: 'red'
-               },
-               {
-                  label: 'Orange',
-                  value: 'orange'
-               },
-               {
-                  label: 'Yellow',
-                  value: 'yellow'
-               },
-               {
-                  label: 'Green',
-                  value: 'green'
-               },
-               {
-                  label: 'Blue',
-                  value: 'blue'
-               },
-               {
-                  label: 'Purple',
-                  value: 'purple'
-               }
+              {
+                label: 'Red',
+                value: 'red'
+              },
+              {
+                label: 'Orange',
+                value: 'orange'
+              },
+              {
+                label: 'Yellow',
+                value: 'yellow'
+              },
+              {
+                label: 'Green',
+                value: 'green'
+              },
+              {
+                label: 'Blue',
+                value: 'blue'
+              },
+              {
+                label: 'Purple',
+                value: 'purple'
+              }
             ],
             defaultValue: ['red', 'blue'],
             minCount: 2,
@@ -442,34 +442,34 @@ export default {
       }
     ]
     return {
-      template: localStorage['template'] || 'bootstrap3',
-      locale: localStorage['locale'] || 'en_us',
-      example: examples[+localStorage['example'] || 0],
+      template: window.localStorage['template'] || 'bootstrap3',
+      locale: window.localStorage['locale'] || 'en_us',
+      example: examples[+window.localStorage['example'] || 0],
       examples: examples,
       form: {}
     }
   },
   methods: {
-    changeTemplate(e) {
-      localStorage['template'] = e.target.value
-      location.reload()
+    changeTemplate (e) {
+      window.localStorage['template'] = e.target.value
+      window.location.reload()
     },
-    changeLocale(e) {
-      localStorage['locale'] = e.target.value
-      location.reload()
+    changeLocale (e) {
+      window.localStorage['locale'] = e.target.value
+      window.location.reload()
     },
-    onChange(e) {
-      let index = this.examples.indexOf(this.example)
-      localStorage['example'] = index
+    onChange (e) {
+      const index = this.examples.indexOf(this.example)
+      window.localStorage['example'] = index
       this.form = {}
     },
-    onSubmit() {
-      alert('Submit data: ' + JSON.stringify(this.form))
+    onSubmit () {
+      window.alert('Submit data: ' + JSON.stringify(this.form))
     }
   },
   filters: {
-    json(value) {
-      let replace = {
+    json (value) {
+      const replace = {
         String,
         Number,
         Boolean,
@@ -479,7 +479,7 @@ export default {
         'AutoForm.Schema.RegEx.Url': AutoForm.Schema.RegEx.Url
       }
       let json = JSON.stringify(value, (k, v) => {
-        for (let name in replace) {
+        for (const name in replace) {
           if (v === replace[name]) {
             return name
           }
@@ -487,7 +487,7 @@ export default {
         return v
       }, 2)
 
-      for (let name in replace) {
+      for (const name in replace) {
         json = json.replace(new RegExp('"' + name + '"', 'g'), name)
       }
       return json.replace(/"([\w\$]*)":/g, '$1:')

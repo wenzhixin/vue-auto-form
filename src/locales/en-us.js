@@ -23,15 +23,15 @@ export default {
   expectedObject: '%(label)s must be an object',
   expectedConstructor: '%(label)s must be a %(type)s',
   regEx: [
-    {msg: '%(label)s failed regular expression validation'},
-    {exp: 'Email', msg: '%(label)s must be a valid e-mail address'},
-    {exp: 'Domain', msg: '%(label)s must be a valid domain'},
-    {exp: 'WeakDomain', msg: '%(label)s must be a valid domain'},
-    {exp: 'IP', msg: '%(label)s must be a valid IPv4 or IPv6 address'},
-    {exp: 'IPv4', msg: '%(label)s must be a valid IPv4 address'},
-    {exp: 'IPv6', msg: '%(label)s must be a valid IPv6 address'},
-    {exp: 'Url', msg: '%(label)s must be a valid URL'},
-    {exp: 'Id', msg: '%(label)s must be a valid alphanumeric ID'}
+    { msg: '%(label)s failed regular expression validation' },
+    { exp: 'Email', msg: '%(label)s must be a valid e-mail address' },
+    { exp: 'Domain', msg: '%(label)s must be a valid domain' },
+    { exp: 'WeakDomain', msg: '%(label)s must be a valid domain' },
+    { exp: 'IP', msg: '%(label)s must be a valid IPv4 or IPv6 address' },
+    { exp: 'IPv4', msg: '%(label)s must be a valid IPv4 address' },
+    { exp: 'IPv6', msg: '%(label)s must be a valid IPv6 address' },
+    { exp: 'Url', msg: '%(label)s must be a valid URL' },
+    { exp: 'Id', msg: '%(label)s must be a valid alphanumeric ID' }
   ],
   keyNotInSchema: '%(key)s is not allowed by the schema'
 }

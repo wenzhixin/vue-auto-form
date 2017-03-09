@@ -3,7 +3,7 @@ module.exports = {
     "es6": true,
     "node": true
   },
-  "extends": "eslint:recommended",
+  "extends": "vue",
   "parserOptions": {
     "sourceType": "module"
   },
@@ -23,6 +23,15 @@ module.exports = {
     "semi": [
       "error",
       "never"
+    ],
+    "camelcase": [
+      "off"
     ]
+  },
+  "plugins": [
+    "html"
+  ],
+  "settings": {
+    "html/html-extensions": [".vue"]
   }
 };

@@ -1,22 +1,6 @@
 import _ from 'lodash'
 
-export function closest(el, selector) {
-  const matchesSelector = el.matches ||
-    el.webkitMatchesSelector ||
-    el.mozMatchesSelector ||
-    el.msMatchesSelector
-
-  while (el) {
-    if (matchesSelector.call(el, selector)) {
-      return el
-    } else {
-      el = el.parentElement
-    }
-  }
-  return null
-}
-
-export function getType(input) {
+export function getType (input) {
   if (!input) {
     return
   }
@@ -54,7 +38,7 @@ export function getType(input) {
   }
 }
 
-export function getInput(input, name) {
+export function getInput (input, name) {
   name.split('.').forEach(name => {
     if (/\d+/.test(name)) {
       input = input.$
@@ -68,13 +52,13 @@ export function getInput(input, name) {
   return input
 }
 
-export function updateModel(model, unflatten) {
+export function updateModel (model, unflatten) {
   // remove all
-  for (let name in model) {
+  for (const name in model) {
     delete model[name]
   }
   // remove array null
-  let removeNulls = obj => {
+  const removeNulls = obj => {
     if (_.isArray(obj)) {
       for (let i = obj.length - 1; i >= 0; i--) {
         if (obj[i] === undefined || obj[i] === null) {
@@ -84,7 +68,7 @@ export function updateModel(model, unflatten) {
         }
       }
     } else {
-      for (let k in obj) {
+      for (const k in obj) {
         if (_.isArray(obj[k]) || _.isObject(obj[k])) {
           removeNulls(obj[k])
         }
@@ -93,7 +77,7 @@ export function updateModel(model, unflatten) {
   }
   removeNulls(unflatten)
   // update
-  for (let name in unflatten) {
+  for (const name in unflatten) {
     model[name] = unflatten[name]
   }
 }

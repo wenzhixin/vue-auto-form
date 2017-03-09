@@ -17,12 +17,12 @@ export default {
     input: Object
   },
   computed: {
-    showLabel() {
+    showLabel () {
       return !this.input ||
         this.input.type === Boolean &&
         (!this.input.inputType || this.input.inputType === 'checkbox')
     },
-    isArray() {
+    isArray () {
       return this.input && this.input.parent &&
         this.input.parent.type === Array
     }

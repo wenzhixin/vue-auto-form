@@ -12,11 +12,11 @@ const RX_NAME_DOMAIN = '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\\.|$))+'
 // strict IPv4 expression which allows 0-255 per oktett
 const RX_IPv4 = '(?:(?:[0-1]?\\d{1,2}|2[0-4]\\d|25[0-5])(?:\\.|$)){4}'
 // strict IPv6 expression which allows (and validates) all shortcuts
-const RX_IPv6 = '(?:(?:[\\dA-Fa-f]{1,4}(?::|$)){8}' // full adress
-  + '|(?=(?:[^:\\s]|:[^:\\s])*::(?:[^:\\s]|:[^:\\s])*$)' // or min/max one '::'
-  + '[\\dA-Fa-f]{0,4}(?:::?(?:[\\dA-Fa-f]{1,4}|$)){1,6})' // and short adress
+const RX_IPv6 = '(?:(?:[\\dA-Fa-f]{1,4}(?::|$)){8}' + // full adress
+  '|(?=(?:[^:\\s]|:[^:\\s])*::(?:[^:\\s]|:[^:\\s])*$)' + // or min/max one '::'
+  '[\\dA-Fa-f]{0,4}(?:::?(?:[\\dA-Fa-f]{1,4}|$)){1,6})' // and short adress
 // this allows domains (also localhost etc) and ip adresses
-const RX_WEAK_DOMAIN = '(?:' + [RX_NAME_DOMAIN,RX_IPv4,RX_IPv6].join('|') + ')'
+const RX_WEAK_DOMAIN = '(?:' + [RX_NAME_DOMAIN, RX_IPv4, RX_IPv6].join('|') + ')'
 
 const RegEx = {
   // We use the RegExp suggested by W3C in http://www.w3.org/TR/html5/forms.html#valid-e-mail-address
@@ -44,20 +44,20 @@ let Messages = Locales.en_us
 
 export default {
   RegEx,
-  setLocale(locale) {
+  setLocale (locale) {
     Messages = Locales[locale]
   },
-  getDefaults(schema, defaults = {}) {
-    let obj = {}
+  getDefaults (schema, defaults = {}) {
+    const obj = {}
     schema = _.cloneDeep(schema)
-    for (let name in schema) {
+    for (const name in schema) {
       obj[name] = this.getDefault(name, schema[name], defaults[name])
     }
     return obj
   },
-  getDefault(name, input, defaults) {
+  getDefault (name, input, defaults) {
     let isSelect = false
-    let values = []
+    const values = []
 
     if (input.inputType === 'select') {
       isSelect = true
@@ -85,7 +85,7 @@ export default {
     }
 
     return _.defaults({
-      values: values,
+      values: values
     }, input, {
       type: String,
       inputType: undefined,
@@ -107,7 +107,7 @@ export default {
       disableType: undefined // 'insert' or 'update'
     })
   },
-  validate(value, input) {
+  validate (value, input) {
     if (!input.optional &&
       (value === undefined || value === null || value === '')) {
       return sprintf(Messages.required, input)
@@ -123,7 +123,7 @@ export default {
         return sprintf(Messages.maxString, input)
       }
       if (input.regEx && !input.regEx.test(value)) {
-        let regEx = _.find(Messages.regEx, item => {
+        const regEx = _.find(Messages.regEx, item => {
           return RegEx[item.exp] === input.regEx
         })
         return sprintf(regEx ? regEx.msg : Messages.regEx[0].msg, input)

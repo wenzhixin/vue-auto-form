@@ -30,47 +30,49 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 export default {
   props: {
     name: String,
     input: Object
   },
-  data() {
+  data () {
     return {
       index: 0,
       list: {}
     }
   },
-  mounted() {
+  mounted () {
     this.reset()
   },
   computed: {
-    showDelete() {
+    showDelete () {
       return this.input.optional === true ||
         Object.keys(this.list).length > 1
     }
   },
   methods: {
-    cloneItem() {
+    cloneItem () {
       return _.clone(this.input.$)
     },
-    reset() {
+    reset () {
       this.index = 0
       this.list = {}
       this.list[this.index++] = this.cloneItem()
       this.list = Object.assign({}, this.list)
     },
-    onPlus() {
+    onPlus () {
       this.list[this.index++] = this.cloneItem()
       this.list = Object.assign({}, this.list)
     },
-    onMinus(i) {
+    onMinus (i) {
       delete this.list[i]
       this.list = Object.assign({}, this.list)
     }
   },
   watch: {
-    input(val) {
+    input (val) {
       this.reset()
     }
   }

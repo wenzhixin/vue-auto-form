@@ -22,8 +22,8 @@ export default {
     disabled: Boolean
   },
   methods: {
-    onChange(e) {
-      let options = [].slice.call(e.target.selectedOptions)
+    onChange (e) {
+      const options = [].slice.call(e.target.selectedOptions)
       this.$emit('change', options.map(item => {
         if (this.input.arrayType === Number) {
           return +item.value

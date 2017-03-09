@@ -103,8 +103,6 @@
 </template>
 
 <script>
-import _ from 'lodash'
-import sprintf from 'sprintf'
 import { flatten, unflatten } from 'flat'
 import Schema from './schema'
 import Locales from './locales'
@@ -125,10 +123,10 @@ let locale = 'en_us'
 
 export default {
   Schema: Schema,
-  setTemplate(val) {
+  setTemplate (val) {
     template = val
   },
-  setLocale(val) {
+  setLocale (val) {
     locale = val
     Schema.setLocale(val)
   },
@@ -154,38 +152,38 @@ export default {
       default: true
     }
   },
-  data() {
+  data () {
     return {
       formModel: flatten(this.model),
       formSchema: Schema.getDefaults(this.schema, this.model),
       errors: {}
     }
   },
-  mounted() {
+  mounted () {
     this.reset()
   },
   computed: {
-    formClass() {
+    formClass () {
       return Components[template].formClass
     },
-    locale() {
+    locale () {
       return Schema.Messages
     },
-    type() {
+    type () {
       return this.model[this.id] ? 'update' : 'insert'
     }
   },
   methods: {
-    getTemplate() {
+    getTemplate () {
       return template
     },
-    getComponent(name) {
+    getComponent (name) {
       if (Components[template] && Components[template][name]) {
         return Components[template][name]
       }
       return Components.bootstrap3[name]
     },
-    getGroup(input) {
+    getGroup (input) {
       if (getType(input)) {
         return 'form'
       }
@@ -199,16 +197,16 @@ export default {
         return 'object'
       }
     },
-    getLabel(name) {
+    getLabel (name) {
       return Locales[locale][name]
     },
-    isShow(input) {
+    isShow (input) {
       if (!input.showType) {
         return true
       }
       return input.showType === this.type
     },
-    showLable(input) {
+    showLable (input) {
       if (input.type === Boolean &&
         (!input.inputType || input.inputType === 'checkbox')) {
         return false
@@ -216,11 +214,11 @@ export default {
       return true
     },
     // public method
-    reset() {
+    reset () {
       this.formSchema = Schema.getDefaults(this.schema, this.model)
       this.errors = {}
     },
-    validate(callback) {
+    validate (callback) {
       let valid = true
       this.$el.querySelectorAll('[name]').forEach(el => {
         valid = this.validateInput(el.name,
@@ -228,9 +226,9 @@ export default {
       })
       callback(valid)
     },
-    validateInput(name, value, input) {
+    validateInput (name, value, input) {
       input = input || getInput(this.formSchema, name)
-      let error = Schema.validate(value, input)
+      const error = Schema.validate(value, input)
       if (error) {
         this.errors[name] = error
       } else {
@@ -239,7 +237,7 @@ export default {
       this.errors = Object.assign({}, this.errors)
       return !error
     },
-    submit(e) {
+    submit (e) {
       if (e) e.preventDefault()
       this.validate(valid => {
         if (valid) {
@@ -247,7 +245,7 @@ export default {
           this.$emit('submit')
         } else {
           this.$nextTick(() => {
-            let el = this.$el.querySelectorAll('[form-group-error] [name]')
+            const el = this.$el.querySelectorAll('[form-group-error] [name]')
             if (el && el[0]) el[0].focus()
           })
         }
@@ -256,10 +254,10 @@ export default {
     }
   },
   watch: {
-    schema(val) {
+    schema (val) {
       this.reset()
     },
-    model(val) {
+    model (val) {
       this.formModel = flatten(val)
       this.reset()
     }

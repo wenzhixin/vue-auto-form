@@ -20,7 +20,7 @@ export default {
     disabled: Boolean
   },
   methods: {
-    onChange(e) {
+    onChange (e) {
       this.$emit('change', e.target.value)
     }
   }

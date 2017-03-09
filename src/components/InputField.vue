@@ -10,16 +10,16 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import moment from 'moment'
-import Schema from '../schema'
 import bootstrap3 from '../inputTypes'
-import bootstrap3_horizontal from '../templates/bootstrap3-horizontal/inputTypes'
+import bootstrap3Horizontal from '../templates/bootstrap3-horizontal/inputTypes'
 import element from '../templates/element-ui/inputTypes'
-import { closest, getType } from '../utils'
+import { getType } from '../utils'
 
 const Components = {
   bootstrap3,
-  bootstrap3_horizontal,
+  'bootstrap3_horizontal': bootstrap3Horizontal,
   element
 }
 
@@ -30,30 +30,30 @@ export default {
     name: String,
     input: Object
   },
-  data() {
+  data () {
     return {
       currentValue: ''
     }
   },
-  mounted() {
+  mounted () {
     this.updateDefaultValue(this.input)
   },
-  destroyed() {
+  destroyed () {
     delete this.form.formModel[this.name]
   },
   computed: {
-    form() {
+    form () {
       let parent = this.$parent
       while (parent.$options._componentTag !== 'auto-form') {
         parent = parent.$parent
       }
       return parent
     },
-    type() {
-      let type = getType(this.input)
+    type () {
+      const type = getType(this.input)
       return type ? this.getComponent(type) : undefined
     },
-    disabled() {
+    disabled () {
       if (!this.input.disableType) {
         return false
       }
@@ -61,30 +61,30 @@ export default {
     }
   },
   methods: {
-    onChange(val) {
+    onChange (val) {
       this.form.formModel[this.name] = val
       this.form.validateInput(this.name, val, this.input)
     },
-    getComponent(name) {
-      let template = this.form.getTemplate()
+    getComponent (name) {
+      const template = this.form.getTemplate()
       if (Components[template] && Components[template][name]) {
         return Components[template][name]
       }
       return Components.bootstrap3[name]
     },
-    updateDefaultValue(val) {
+    updateDefaultValue (val) {
       this.currentValue = this.formatValue(val.defaultValue)
       this.form.formModel[this.name] = this.currentValue
     },
-    formatInput(val) {
-      let input = _.cloneDeep(val)
+    formatInput (val) {
+      const input = _.cloneDeep(val)
       if (input.type === Date) {
         input.min = this.formatValue(input.min)
         input.max = this.formatValue(input.max)
       }
       return input
     },
-    formatValue(val) {
+    formatValue (val) {
       if (val && this.input.type === Date) {
         return moment(val).format(DATE_FORMAT)
       }
@@ -92,7 +92,7 @@ export default {
     }
   },
   watch: {
-    input(val) {
+    input (val) {
       this.updateDefaultValue(val)
     }
   }

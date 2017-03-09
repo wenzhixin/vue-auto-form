@@ -25,7 +25,7 @@ export default {
     disabled: Boolean
   },
   methods: {
-    onChange(e) {
+    onChange (e) {
       let value
       if (e.target.value === 'true') {
         value = true
