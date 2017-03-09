@@ -1,5 +1,5 @@
 <template>
-<form @submit="onSubmit" :class="formClass">
+<form @submit="submit" :class="formClass">
   <template v-if="auto"
     v-for="(input, name) in formSchema">
     <div :is="getComponent('FormGroup')"
@@ -133,11 +133,11 @@ export default {
     Schema.setLocale(val)
   },
   props: {
-    model: {
+    schema: {
       type: Object,
       required: true
     },
-    schema: {
+    model: {
       type: Object,
       required: true
     },
@@ -208,19 +208,28 @@ export default {
       }
       return input.showType === this.type
     },
+    showLable(input) {
+      if (input.type === Boolean &&
+        (!input.inputType || input.inputType === 'checkbox')) {
+        return false
+      }
+      return true
+    },
+    // public method
     reset() {
+      this.formSchema = Schema.getDefaults(this.schema, this.model)
       this.errors = {}
     },
     validate(callback) {
       let valid = true
       this.$el.querySelectorAll('[name]').forEach(el => {
-        let input = getInput(this.formSchema, el.name)
         valid = this.validateInput(el.name,
-          this.formModel[el.name], input) && valid
+          this.formModel[el.name]) && valid
       })
       callback(valid)
     },
     validateInput(name, value, input) {
+      input = input || getInput(this.formSchema, name)
       let error = Schema.validate(value, input)
       if (error) {
         this.errors[name] = error
@@ -230,7 +239,7 @@ export default {
       this.errors = Object.assign({}, this.errors)
       return !error
     },
-    onSubmit(e) {
+    submit(e) {
       if (e) e.preventDefault()
       this.validate(valid => {
         if (valid) {
@@ -244,23 +253,14 @@ export default {
         }
       })
       return false
-    },
-    showLable(input) {
-      if (input.type === Boolean &&
-        (!input.inputType || input.inputType === 'checkbox')) {
-        return false
-      }
-      return true
     }
   },
   watch: {
     schema(val) {
-      this.formSchema = Schema.getDefaults(val, this.model)
       this.reset()
     },
     model(val) {
       this.formModel = flatten(val)
-      this.formSchema = Schema.getDefaults(this.schema, val)
       this.reset()
     }
   }

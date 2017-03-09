@@ -1,3 +1,91 @@
+# vue-auto-form
+
+vue-auto-form is a [`vue2`](https://github.com/vuejs/vue) component that helpers to easily create basic forms with automatic insert and update events, and automatic reactive validation.
+
+## Installation
+
+```
+npm install vue-auto-form --save
+```
+
+And then:
+```
+import AutoForm from 'vue-auto-form'
+
+<auto-form :schema="schema" :model="model" @submit="onSubmit"></auto-form>
+```
+
+## Demo
+
+[Live]()
+
+[Source]()
+
+## Themes
+
+```js
+AutoForm.setTemplate(template_name)
+```
+
+* [bootstrap3](https://github.com/twbs/bootstrap)
+* bootstrap3_horizontal
+* [element](https://github.com/ElemeFE/element)
+
+## Locales
+
+```js
+AutoForm.setLocale(locale_name)
+```
+
+* en_us
+* zh_cn
+
+## AutoForm Properties
+
+### schema
+
+See the "Schema Rules" section.
+
+### model
+
+The data of form component, if model has an [id] property, the type of the form is `update`, otherwise is `insert`.
+
+### id
+
+This property is use to de determine the type of the form is `insert` or `update` by `model[id]`.
+
+The default value is `'id'`.
+
+### showSubmit
+
+You can hide the submit button when you use dialog.
+
+The default value is `true`.
+
+## AutoForm methods
+
+### validate()
+
+The method to validate the whole form.
+
+### validateInput(name, value)
+
+The method to validate a certain form input.
+
+### submit
+
+The method to submit the form manually.
+
+### reset()
+
+Reset all the fields and remove validation result.
+
+## AutoForm Events
+
+### submit
+
+Triggers when submit the form or call `onSubmit()` method manually.
+
 ## Schema Rules
 
 Here are some specifics about the various rules you can define in your schema.
@@ -99,11 +187,11 @@ Define the true or false label when `type` is `Boolean`.
 
 ### showType
 
-Define what type you want to show the input, it can be ` `, `insert` or `update`.
+Define what type you want to show the input, it can be `''`, `insert` or `update`.
 
 ### disableType
 
-Define what type you want to disable the input, it can be ` `, `insert` or `update`.
+Define what type you want to disable the input, it can be `''`, `insert` or `update`.
 
 ### regEx
 
@@ -160,3 +248,7 @@ The `AutoForm.Schema.RegEx` object defines standard regular expressions you can 
   }
 }
 ```
+
+## LICENSE
+
+**NOTE:** vue-auto-form is licensed under the [The MIT License](https://github.com/wenzhixin/vue-auto-form/blob/master/LICENSE). Completely free, you can arbitrarily use and modify this plugin. If this plugin is useful to you, you can **Star** this repo, your support is my biggest motive force, thanks.
