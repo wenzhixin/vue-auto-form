@@ -21,6 +21,65 @@ import AutoForm from 'vue-auto-form'
 
 [Source](https://github.com/wenzhixin/vue-auto-form/tree/master/examples)
 
+## Example
+
+```vue
+<template>
+<auto-form :schema="schema" :model="model" @submit="onSubmit"></auto-form>
+</teamplte>
+
+<script>
+import AutoForm from 'vue-auto-form'
+
+// AutoForm.setTemplate('element')
+// AutoForm.setLocale('zh_cn')
+
+export default {
+  components: {
+    AutoForm
+  },
+  data() {
+    return {
+      schema: {
+        title: {
+          type: String,
+          label: 'Title',
+          max: 50
+        },
+        author: {
+          type: String,
+          label: 'Author'
+        },
+        copies: {
+          type: Number,
+          label: 'Number of copies',
+          min: 0
+        },
+        lastCheckedOut: {
+          type: Date,
+          label: 'Last date this book was checked out',
+          optional: true
+        },
+        summary: {
+          type: String,
+          label: 'Brief summary',
+          rows: 5,
+          optional: true,
+          max: 1000
+        }
+      },
+      model: {}
+    }
+  },
+  methods: {
+    onSubmit() {
+      console.log(this.model)
+    }
+  }
+}
+</script>
+```
+
 ## Themes
 
 ```js
@@ -84,7 +143,7 @@ Reset all the fields and remove validation result.
 
 ### submit
 
-Triggers when submit the form or call `onSubmit()` method manually.
+Triggers when submit the form or call `submit()` method manually.
 
 ## Schema Rules
 
