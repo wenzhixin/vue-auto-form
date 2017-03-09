@@ -17,9 +17,9 @@ import AutoForm from 'vue-auto-form'
 
 ## Demo
 
-[Live]()
+[Live](https://wenzhixin.github.io/vue-auto-form/)
 
-[Source]()
+[Source](https://github.com/wenzhixin/vue-auto-form/tree/master/examples)
 
 ## Themes
 
