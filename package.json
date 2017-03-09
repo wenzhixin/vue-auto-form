@@ -1,8 +1,9 @@
 {
   "name": "vue-auto-form",
   "description": "A vue2 component that helpers to easily create basic forms with automatic insert and update events, and automatic reactive validation.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "wenzhixin2010@gmial.com",
+  "main": "./src/index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
