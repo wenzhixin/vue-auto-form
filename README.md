@@ -38,7 +38,7 @@ export default {
   components: {
     AutoForm
   },
-  data() {
+  data () {
     return {
       schema: {
         title: {
@@ -72,7 +72,7 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
+    onSubmit () {
       console.log(this.model)
     }
   }
