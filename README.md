@@ -89,6 +89,7 @@ AutoForm.setTemplate(template_name)
 * [bootstrap3](https://github.com/twbs/bootstrap)
 * bootstrap3_horizontal
 * [element](https://github.com/ElemeFE/element)
+* element_horizontal
 
 ## Locales
 

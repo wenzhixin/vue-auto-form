@@ -112,11 +112,13 @@ import { getType, getInput, updateModel } from './utils'
 import bootstrap3 from './components'
 import bootstrap3_horizontal from './templates/bootstrap3-horizontal/components'
 import element from './templates/element-ui/components'
+import element_horizontal from './templates/element-ui-horizontal/components'
 
 const Components = {
   bootstrap3,
   bootstrap3_horizontal,
-  element
+  element,
+  element_horizontal
 }
 let template = 'bootstrap3'
 let locale = 'en_us'
@@ -180,6 +182,10 @@ export default {
     getComponent (name) {
       if (Components[template] && Components[template][name]) {
         return Components[template][name]
+      }
+      const baseTemplate = template.split('_')[0]
+      if (Components[baseTemplate] && Components[baseTemplate][name]) {
+        return Components[baseTemplate][name]
       }
       return Components.bootstrap3[name]
     },

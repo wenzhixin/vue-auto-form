@@ -29,6 +29,7 @@
                 <option value="bootstrap3">Bootstrap3</option>
                 <option value="bootstrap3_horizontal">Bootstrap3 Horizontal</option>
                 <option value="element">Element UI</option>
+                <option value="element_horizontal">Element UI Horizontal</option>
               </select>
             </div>
             <div class="form-group">
