@@ -1,16 +1,15 @@
 <template>
-<select
-  class="el-input__inner"
-  multiple
+<el-select
   :name="name"
   :disabled="disabled"
+  :placeholder="input.placeholder"
+  multiple
+  v-model="value"
   @change="onChange">
-  <option v-for="item in input.values"
+  <el-option v-for="item in input.values"
     :value="item.value"
-    :selected="input.defaultValue.indexOf(item.value) > -1">
-    {{item.label}}
-  </option>
-</select>
+    :label="item.label"/>
+</el-select>
 </template>
 
 <script>
@@ -21,16 +20,26 @@ export default {
     input: Object,
     disabled: Boolean
   },
+  data () {
+    return {
+      currentValue: this.input.defaultValue
+    }
+  },
   methods: {
-    onChange (e) {
-      const options = [].slice.call(e.target.selectedOptions)
-      this.$emit('change', options.map(item => {
+    onChange (values) {
+      this.$emit('change', values.map(value => {
         if (this.input.arrayType === Number) {
-          return +item.value
+          return +value
         }
-        return item.value
+        return value
       }))
     }
   }
 }
 </script>
+
+<style scoped>
+.el-select {
+  display: block !important;
+}
+</style>

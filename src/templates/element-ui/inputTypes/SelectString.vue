@@ -1,18 +1,14 @@
 <template>
-<select
-  class="el-input__inner"
+<el-select
   :name="name"
   :disabled="disabled"
+  :placeholder="input.placeholder"
+  v-model="currentValue"
   @change="onChange">
-  <option value>
-    {{input.placeholder}}
-  </option>
-  <option v-for="item in input.values"
+  <el-option v-for="item in input.values"
     :value="item.value"
-    :selected="item.value === input.defaultValue">
-    {{item.label}}
-  </option>
-</select>
+    :label="item.label"/>
+</el-select>
 </template>
 
 <script>
@@ -23,10 +19,21 @@ export default {
     input: Object,
     disabled: Boolean
   },
+  data () {
+    return {
+      currentValue: this.input.defaultValue
+    }
+  },
   methods: {
-    onChange (e) {
-      this.$emit('change', e.target.value)
+    onChange (value) {
+      this.$emit('change', value)
     }
   }
 }
 </script>
+
+<style scoped>
+.el-select {
+  display: block !important;
+}
+</style>

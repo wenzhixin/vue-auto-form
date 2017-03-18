@@ -1,13 +1,13 @@
 <template>
-<input
-  class="el-input__inner"
+<el-input
   :type="input.inputType || 'text'"
   :name="name"
   :placeholder="input.placeholder"
   :maxlength="input.max"
+  :minlength="input.min"
   :value="value"
   :disabled="disabled"
-  @input="onChange"/>
+  @change="onChange"/>
 </template>
 
 <script>
@@ -19,8 +19,8 @@ export default {
     disabled: Boolean
   },
   methods: {
-    onChange (e) {
-      this.$emit('change', e.target.value)
+    onChange (value) {
+      this.$emit('change', value)
     }
   }
 }
