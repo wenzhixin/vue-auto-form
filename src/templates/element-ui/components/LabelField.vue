@@ -22,7 +22,9 @@ export default {
       const template = this.form.getTemplate()
       if (template.indexOf('horizontal') === -1) {
         return {
-          float: 'none'
+          float: 'none',
+          display: 'block',
+          textAlign: 'left'
         }
       }
     }
