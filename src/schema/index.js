@@ -104,7 +104,9 @@ export default {
       trueLabel: Messages.yes,
       falseLabel: Messages.no,
       showType: undefined, // 'insert' or 'update'
-      disableType: undefined // 'insert' or 'update'
+      disableType: undefined, // 'insert' or 'update'
+      component: undefined, // custom component
+      validate: undefined // custom validate
     })
   },
   validate (value, input) {

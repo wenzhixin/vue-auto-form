@@ -45,7 +45,7 @@ export function getInput (input, name) {
     } else {
       input = input[name]
     }
-    if (input.type === Object) {
+    if (!input.component && input.type === Object) {
       input = input.$
     }
   })

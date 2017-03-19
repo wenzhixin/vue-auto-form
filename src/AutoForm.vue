@@ -95,7 +95,7 @@
   <div :is="getComponent('FormGroup')"
     v-if="auto && showSubmit">
     <div :is="getComponent('Submit')"
-      :label="getLabel('submit')"/>
+      :label="submitLabel || getLabel('submit')"/>
   </div>
 
   <slot v-if="!auto"></slot>
@@ -152,7 +152,8 @@ export default {
     showSubmit: {
       type: Boolean,
       default: true
-    }
+    },
+    submitLabel: String
   },
   data () {
     return {
@@ -190,7 +191,7 @@ export default {
       return Components.bootstrap3[name]
     },
     getGroup (input) {
-      if (getType(input)) {
+      if (input.component || getType(input)) {
         return 'form'
       }
       if (input.type === Array) {
@@ -234,7 +235,14 @@ export default {
     },
     validateInput (name, value, input) {
       input = input || getInput(this.formSchema, name)
-      const error = Schema.validate(value, input)
+      let error = ''
+
+      if (input.validate) {
+        error = input.validate(value)
+      } else {
+        error = Schema.validate(value, input)
+      }
+
       if (error) {
         this.errors[name] = error
       } else {

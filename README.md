@@ -122,6 +122,12 @@ You can hide the submit button when you use dialog.
 
 The default value is `true`.
 
+### submitLabel
+
+The label of the submit button.
+
+The default value is `Submit`.
+
 ## AutoForm methods
 
 ### validate()
@@ -252,6 +258,14 @@ Define what type you want to show the input, it can be `''`, `insert` or `update
 ### disableType
 
 Define what type you want to disable the input, it can be `''`, `insert` or `update`.
+
+### component
+
+Use your custom component.
+
+### validate
+
+Use your custom validate.
 
 ### regEx
 

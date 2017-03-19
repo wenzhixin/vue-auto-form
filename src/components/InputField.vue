@@ -53,6 +53,9 @@ export default {
       return parent
     },
     type () {
+      if (this.input.component) {
+        return this.input.component
+      }
       const type = getType(this.input)
       return type ? this.getComponent(type) : undefined
     },
