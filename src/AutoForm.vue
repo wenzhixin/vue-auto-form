@@ -26,6 +26,7 @@
       :name="name">
       <template scope="props">
         <div :is="getComponent('FormGroup')"
+          v-if="isShow(props.input)"
           :input="props.input"
           :error="errors[props.name_]">
           <div :is="getComponent('LabelField')"
@@ -103,10 +104,11 @@
 </template>
 
 <script>
-import { flatten, unflatten } from 'flat'
+import _ from 'lodash'
+import { flatten } from 'flat'
 import Schema from './schema'
 import Locales from './locales'
-import { getType, getInput, updateModel } from './utils'
+import { getType, getInput, unflattenModel } from './utils'
 
 // components
 import bootstrap3 from './components'
@@ -180,6 +182,9 @@ export default {
     getTemplate () {
       return template
     },
+    getModel () {
+      return unflattenModel(this.formModel)
+    },
     getComponent (name) {
       if (Components[template] && Components[template][name]) {
         return Components[template][name]
@@ -211,6 +216,9 @@ export default {
       if (!input.showType) {
         return true
       }
+      if (_.isFunction(input.showType)) {
+        return input.showType(this.getModel(), this.type)
+      }
       return input.showType === this.type
     },
     showLable (input) {
@@ -238,7 +246,7 @@ export default {
       let error = ''
 
       if (input.validate) {
-        error = input.validate(value)
+        error = input.validate(value, this.getModel())
       } else {
         error = Schema.validate(value, input)
       }
@@ -255,7 +263,7 @@ export default {
       if (e) e.preventDefault()
       this.validate(valid => {
         if (valid) {
-          updateModel(this.model, unflatten(this.formModel))
+          unflattenModel(this.formModel, this.model)
           this.$emit('submit')
         } else {
           this.$nextTick(() => {

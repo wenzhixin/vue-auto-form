@@ -103,8 +103,8 @@ export default {
       defaultValue: defaults || (input.type === Array ? [] : undefined),
       trueLabel: Messages.yes,
       falseLabel: Messages.no,
-      showType: undefined, // 'insert' or 'update'
-      disableType: undefined, // 'insert' or 'update'
+      showType: undefined, // 'insert', 'update' or function to custom
+      disableType: undefined, // 'insert', 'update' or function to custom
       component: undefined, // custom component
       validate: undefined // custom validate
     })

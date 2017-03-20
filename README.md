@@ -253,11 +253,11 @@ Define the true or false label when `type` is `Boolean`.
 
 ### showType
 
-Define what type you want to show the input, it can be `''`, `insert` or `update`.
+Define what type you want to show the input, it can be `''`, `insert`, `update` or custom function.
 
 ### disableType
 
-Define what type you want to disable the input, it can be `''`, `insert` or `update`.
+Define what type you want to disable the input, it can be `''`, `insert`, `update` or custom function.
 
 ### component
 

@@ -63,6 +63,9 @@ export default {
       if (!this.input.disableType) {
         return false
       }
+      if (_.isFunction(this.input.disableType)) {
+        return this.input.showType(this.form.getModel(), this.form.type)
+      }
       return this.input.disableType === this.form.type
     }
   },

@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { unflatten } from 'flat'
 
 export function getType (input) {
   if (!input) {
@@ -52,10 +53,9 @@ export function getInput (input, name) {
   return input
 }
 
-export function updateModel (model, unflatten) {
-  // remove all
-  for (const name in model) {
-    delete model[name]
+export function unflattenModel (model, res = {}) {
+  for (const name in res) {
+    delete res[name]
   }
   // remove array null
   const removeNulls = obj => {
@@ -75,9 +75,11 @@ export function updateModel (model, unflatten) {
       }
     }
   }
-  removeNulls(unflatten)
+  model = unflatten(model)
+  removeNulls(model)
   // update
-  for (const name in unflatten) {
-    model[name] = unflatten[name]
+  for (const name in model) {
+    res[name] = model[name]
   }
+  return res
 }
