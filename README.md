@@ -142,7 +142,7 @@ The method to validate a certain form input.
 
 The method to submit the form manually.
 
-### reset()
+### reset(force = false)
 
 Reset all the fields and remove validation result.
 

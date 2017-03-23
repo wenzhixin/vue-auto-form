@@ -229,7 +229,10 @@ export default {
       return true
     },
     // public method
-    reset () {
+    reset (force = false) {
+      if (force) {
+        this.$el.reset()
+      }
       this.formSchema = Schema.getDefaults(this.schema, this.model)
       this.errors = {}
     },
