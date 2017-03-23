@@ -1,15 +1,11 @@
 <template>
-<div class="checkbox">
-  <label>
-    <input
-      type="checkbox"
-      :name="name"
-      :checked="value"
-      :disabled="disabled"
-      @change="onChange"/>
-    {{input.label}}
-  </label>
-</div>
+<el-checkbox
+  :name="name"
+  :disabled="disabled"
+  v-model="currentValue"
+  @change="onChange">
+  {{input.label}}
+</el-checkbox>
 </template>
 
 <script>
@@ -20,9 +16,19 @@ export default {
     input: Object,
     disabled: Boolean
   },
+  data () {
+    return {
+      currentValue: this.value
+    }
+  },
   methods: {
     onChange (e) {
       this.$emit('change', e.target.checked)
+    }
+  },
+  watch: {
+    value (value) {
+      this.currentValue = this.value
     }
   }
 }

@@ -12,15 +12,18 @@
 <script>
 import _ from 'lodash'
 import moment from 'moment'
-import bootstrap3 from '../inputTypes'
-import bootstrap3Horizontal from '../templates/bootstrap3-horizontal/inputTypes'
-import element from '../templates/element-ui/inputTypes'
 import { getType } from '../utils'
+
+import bootstrap3 from '../inputTypes'
+import bootstrap3_horizontal from '../templates/bootstrap3-horizontal/inputTypes'
+import element from '../templates/element-ui/inputTypes'
+import element_horizontal from '../templates/element-ui-horizontal/inputTypes'
 
 const Components = {
   bootstrap3,
-  'bootstrap3_horizontal': bootstrap3Horizontal,
-  element
+  bootstrap3_horizontal,
+  element,
+  element_horizontal
 }
 
 const DATE_FORMAT = 'YYYY-MM-DD'
@@ -50,12 +53,18 @@ export default {
       return parent
     },
     type () {
+      if (this.input.component) {
+        return this.input.component
+      }
       const type = getType(this.input)
       return type ? this.getComponent(type) : undefined
     },
     disabled () {
       if (!this.input.disableType) {
         return false
+      }
+      if (_.isFunction(this.input.disableType)) {
+        return this.input.showType(this.form.getModel(), this.form.type)
       }
       return this.input.disableType === this.form.type
     }
@@ -69,6 +78,10 @@ export default {
       const template = this.form.getTemplate()
       if (Components[template] && Components[template][name]) {
         return Components[template][name]
+      }
+      const baseTemplate = template.split('_')[0]
+      if (Components[baseTemplate] && Components[baseTemplate][name]) {
+        return Components[baseTemplate][name]
       }
       return Components.bootstrap3[name]
     },

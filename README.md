@@ -89,6 +89,7 @@ AutoForm.setTemplate(template_name)
 * [bootstrap3](https://github.com/twbs/bootstrap)
 * bootstrap3_horizontal
 * [element](https://github.com/ElemeFE/element)
+* element_horizontal
 
 ## Locales
 
@@ -121,6 +122,12 @@ You can hide the submit button when you use dialog.
 
 The default value is `true`.
 
+### submitLabel
+
+The label of the submit button.
+
+The default value is `Submit`.
+
 ## AutoForm methods
 
 ### validate()
@@ -135,7 +142,7 @@ The method to validate a certain form input.
 
 The method to submit the form manually.
 
-### reset()
+### reset(force = false)
 
 Reset all the fields and remove validation result.
 
@@ -246,11 +253,19 @@ Define the true or false label when `type` is `Boolean`.
 
 ### showType
 
-Define what type you want to show the input, it can be `''`, `insert` or `update`.
+Define what type you want to show the input, it can be `''`, `insert`, `update` or custom function.
 
 ### disableType
 
-Define what type you want to disable the input, it can be `''`, `insert` or `update`.
+Define what type you want to disable the input, it can be `''`, `insert`, `update` or custom function.
+
+### component
+
+Use your custom component.
+
+### validate
+
+Use your custom validate.
 
 ### regEx
 

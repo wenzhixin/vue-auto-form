@@ -77,7 +77,7 @@ export default {
     }
     if (input.$) {
       if (input.type === Object) {
-        input.$ = this.getDefaults(input.$)
+        input.$ = this.getDefaults(input.$, defaults)
       } else {
         input.$ = this.getDefault(Messages.thisField, input.$)
         input.$.parent = input
@@ -103,8 +103,10 @@ export default {
       defaultValue: defaults || (input.type === Array ? [] : undefined),
       trueLabel: Messages.yes,
       falseLabel: Messages.no,
-      showType: undefined, // 'insert' or 'update'
-      disableType: undefined // 'insert' or 'update'
+      showType: undefined, // 'insert', 'update' or function to custom
+      disableType: undefined, // 'insert', 'update' or function to custom
+      component: undefined, // custom component
+      validate: undefined // custom validate
     })
   },
   validate (value, input) {
@@ -151,3 +153,4 @@ export default {
     return ''
   }
 }
+

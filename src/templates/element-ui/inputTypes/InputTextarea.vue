@@ -1,13 +1,14 @@
 <template>
-<textarea
-  class="el-input__inner"
+<el-input
+  type="textarea"
   :name="name"
   :placeholder="input.placeholder"
   :maxlength="input.max"
+  :minlength="input.min"
   :rows="input.rows"
   :value="value"
   :disabled="disabled"
-  @input="onChange"/>
+  @change="onChange"/>
 </template>
 
 <script>
@@ -19,8 +20,8 @@ export default {
     disabled: Boolean
   },
   methods: {
-    onChange (e) {
-      this.$emit('change', e.target.value)
+    onChange (value) {
+      this.$emit('change', value)
     }
   }
 }

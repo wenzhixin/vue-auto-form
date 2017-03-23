@@ -26,6 +26,7 @@
       :name="name">
       <template scope="props">
         <div :is="getComponent('FormGroup')"
+          v-if="isShow(props.input)"
           :input="props.input"
           :error="errors[props.name_]">
           <div :is="getComponent('LabelField')"
@@ -95,7 +96,7 @@
   <div :is="getComponent('FormGroup')"
     v-if="auto && showSubmit">
     <div :is="getComponent('Submit')"
-      :label="getLabel('submit')"/>
+      :label="submitLabel || getLabel('submit')"/>
   </div>
 
   <slot v-if="!auto"></slot>
@@ -103,20 +104,23 @@
 </template>
 
 <script>
-import { flatten, unflatten } from 'flat'
+import _ from 'lodash'
+import { flatten } from 'flat'
 import Schema from './schema'
 import Locales from './locales'
-import { getType, getInput, updateModel } from './utils'
+import { getType, getInput, unflattenModel } from './utils'
 
 // components
 import bootstrap3 from './components'
 import bootstrap3_horizontal from './templates/bootstrap3-horizontal/components'
 import element from './templates/element-ui/components'
+import element_horizontal from './templates/element-ui-horizontal/components'
 
 const Components = {
   bootstrap3,
   bootstrap3_horizontal,
-  element
+  element,
+  element_horizontal
 }
 let template = 'bootstrap3'
 let locale = 'en_us'
@@ -150,7 +154,8 @@ export default {
     showSubmit: {
       type: Boolean,
       default: true
-    }
+    },
+    submitLabel: String
   },
   data () {
     return {
@@ -177,14 +182,21 @@ export default {
     getTemplate () {
       return template
     },
+    getModel () {
+      return unflattenModel(this.formModel)
+    },
     getComponent (name) {
       if (Components[template] && Components[template][name]) {
         return Components[template][name]
       }
+      const baseTemplate = template.split('_')[0]
+      if (Components[baseTemplate] && Components[baseTemplate][name]) {
+        return Components[baseTemplate][name]
+      }
       return Components.bootstrap3[name]
     },
     getGroup (input) {
-      if (getType(input)) {
+      if (input.component || getType(input)) {
         return 'form'
       }
       if (input.type === Array) {
@@ -204,6 +216,9 @@ export default {
       if (!input.showType) {
         return true
       }
+      if (_.isFunction(input.showType)) {
+        return input.showType(this.getModel(), this.type)
+      }
       return input.showType === this.type
     },
     showLable (input) {
@@ -214,7 +229,10 @@ export default {
       return true
     },
     // public method
-    reset () {
+    reset (force = false) {
+      if (force) {
+        this.$el.reset()
+      }
       this.formSchema = Schema.getDefaults(this.schema, this.model)
       this.errors = {}
     },
@@ -228,7 +246,14 @@ export default {
     },
     validateInput (name, value, input) {
       input = input || getInput(this.formSchema, name)
-      const error = Schema.validate(value, input)
+      let error = ''
+
+      if (input.validate) {
+        error = input.validate(value, this.getModel())
+      } else {
+        error = Schema.validate(value, input)
+      }
+
       if (error) {
         this.errors[name] = error
       } else {
@@ -241,7 +266,7 @@ export default {
       if (e) e.preventDefault()
       this.validate(valid => {
         if (valid) {
-          updateModel(this.model, unflatten(this.formModel))
+          unflattenModel(this.formModel, this.model)
           this.$emit('submit')
         } else {
           this.$nextTick(() => {
