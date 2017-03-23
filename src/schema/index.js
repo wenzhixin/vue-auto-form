@@ -77,7 +77,7 @@ export default {
     }
     if (input.$) {
       if (input.type === Object) {
-        input.$ = this.getDefaults(input.$)
+        input.$ = this.getDefaults(input.$, defaults)
       } else {
         input.$ = this.getDefault(Messages.thisField, input.$)
         input.$.parent = input
@@ -153,3 +153,4 @@ export default {
     return ''
   }
 }
+
