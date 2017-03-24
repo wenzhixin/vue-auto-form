@@ -4,7 +4,7 @@
   :disabled="disabled"
   :placeholder="input.placeholder"
   multiple
-  v-model="value"
+  v-model="currentValue"
   @change="onChange">
   <el-option v-for="item in input.values"
     :value="item.value"
