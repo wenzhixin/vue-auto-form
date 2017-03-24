@@ -13,7 +13,7 @@ export default {
   maxDate: '%(label)s cannot be after %(max)s',
   badDate: '%(label)s is not a valid date',
   minCount: 'You must specify at least %(minCount)s values',
-  maxCount: 'You cannot specify more than %(minCount)s values',
+  maxCount: 'You cannot specify more than %(maxCount)s values',
   noDecimal: '%(label)s must be an integer',
   notAllowed: '%(value)s is not an allowed value',
   expectedString: '%(label)s must be a string',
