@@ -1,6 +1,14 @@
 ChangeLog
 ---------
 
+### 1.0.3
+
+* Fix schema defaultValue bug
+* Assign formModel to active
+* Fix validateInput error
+* Fix locales typo
+* Fix element SelectArray value warning
+
 ### 1.0.2
 
 * Improve element-ui inputTypes

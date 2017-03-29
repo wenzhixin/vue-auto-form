@@ -43,6 +43,7 @@ export default {
   },
   destroyed () {
     delete this.form.formModel[this.name]
+    this.form.formModel = Object.assign({}, this.form.formModel)
   },
   computed: {
     form () {
@@ -72,6 +73,7 @@ export default {
   methods: {
     onChange (val) {
       this.form.formModel[this.name] = val
+      this.form.formModel = Object.assign({}, this.form.formModel)
       this.form.validateInput(this.name, val, this.input)
     },
     getComponent (name) {
@@ -88,6 +90,7 @@ export default {
     updateDefaultValue (val) {
       this.currentValue = this.formatValue(val.defaultValue)
       this.form.formModel[this.name] = this.currentValue
+      this.form.formModel = Object.assign({}, this.form.formModel)
     },
     formatInput (val) {
       const input = _.cloneDeep(val)

@@ -239,8 +239,10 @@ export default {
     validate (callback) {
       let valid = true
       this.$el.querySelectorAll('[name]').forEach(el => {
-        valid = this.validateInput(el.name,
-          this.formModel[el.name]) && valid
+        if (this.formModel.hasOwnProperty(el.name)) {
+          valid = this.validateInput(el.name,
+            this.formModel[el.name]) && valid
+        }
       })
       callback(valid)
     },

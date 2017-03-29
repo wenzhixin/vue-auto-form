@@ -85,12 +85,13 @@ export default {
     }
 
     return _.defaults({
-      values: values
+      values: values,
+      defaultValue: defaults || (input.type === Array ? [] : undefined)
     }, input, {
       type: String,
       inputType: undefined,
       arrayType: String,
-      label: input.label || _.startCase(name),
+      label: _.startCase(name),
       placeholder: isSelect ? Messages.selectOne : undefined,
       optional: false,
       min: undefined,
@@ -100,7 +101,6 @@ export default {
       step: undefined,
       minCount: undefined,
       maxCount: undefined,
-      defaultValue: defaults || (input.type === Array ? [] : undefined),
       trueLabel: Messages.yes,
       falseLabel: Messages.no,
       showType: undefined, // 'insert', 'update' or function to custom
@@ -153,4 +153,3 @@ export default {
     return ''
   }
 }
-
