@@ -221,6 +221,10 @@ Set to `true` if type is `Number` or `inputType` is `Number` and you want to all
 
 Define the step of the number input. Used only when `type` is `Number`.
 
+### unit
+
+Define the unit of the input.
+
 ### minCount/maxCount
 
 Define the minimum or maximum array length. Used only when `type` is `Array`.

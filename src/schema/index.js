@@ -99,6 +99,7 @@ export default {
       rows: undefined,
       decimal: false,
       step: undefined,
+      unit: undefined,
       minCount: undefined,
       maxCount: undefined,
       trueLabel: Messages.yes,
