@@ -166,6 +166,16 @@ export default {
         }
       },
       {
+        title: 'Define unit',
+        schema: {
+          money: {
+            type: String,
+            label: '单价',
+            unit: '元'
+          }
+        }
+      },
+      {
         title: 'Boolean checkbox with default value',
         schema: {
           agree: {

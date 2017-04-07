@@ -1,6 +1,10 @@
 ChangeLog
 ---------
 
+### 1.0.4
+
+* Add unit schema property
+
 ### 1.0.3
 
 * Fix schema defaultValue bug

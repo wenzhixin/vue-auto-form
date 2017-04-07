@@ -4,7 +4,11 @@
   <slot name="label"></slot>
   <label class="col-sm-3 control-label" v-if="showLabel"/>
   <div :class="{'col-sm-9': !isArray}">
-    <slot></slot>
+    <div class="input-group" v-if="input.unit">
+      <slot></slot>
+      <span class="input-group-addon">{{input.unit}}</span>
+    </div>
+    <slot v-else></slot>
     <slot name="help"></slot>
   </div>
 </div>
@@ -14,11 +18,16 @@
 export default {
   props: {
     error: String,
-    input: Object
+    input: {
+      type: Object,
+      default () {
+        return {}
+      }
+    }
   },
   computed: {
     showLabel () {
-      return !this.input ||
+      return !this.input.type ||
         this.input.type === Boolean &&
         (!this.input.inputType || this.input.inputType === 'checkbox')
     },
