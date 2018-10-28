@@ -44,7 +44,7 @@
             <div class="form-group">
               <label class="control-label">Schema</label>
               <select class="form-control" v-model="example" @change="onChange">
-                <option :value="e" v-for="(e, i) in examples">
+                <option :value="e" v-for="(e, i) in examples" :key="i">
                   {{e.title}}
                 </option>
               </select>

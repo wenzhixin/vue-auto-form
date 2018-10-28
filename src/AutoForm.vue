@@ -4,6 +4,7 @@
     v-for="(input, name) in formSchema">
     <div :is="getComponent('FormGroup')"
       v-if="isShow(input) && getGroup(input) === 'form'"
+      :key="name"
       :input="input"
       :error="errors[name]">
       <div :is="getComponent('LabelField')"
@@ -22,6 +23,7 @@
 
     <div :is="getComponent('ObjectGroup')"
       v-if="isShow(input) && getGroup(input) === 'object'"
+      :key="name"
       :input="input"
       :name="name">
       <template scope="props">
