@@ -7,7 +7,8 @@
   <option value>
     {{input.placeholder}}
   </option>
-  <option v-for="item in input.values"
+  <option v-for="(item, i) in input.values"
+    :key="i"
     :value="item.value"
     :selected="item.value === input.defaultValue">
     {{item.label}}

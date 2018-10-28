@@ -5,7 +5,8 @@
   :name="name"
   :disabled="disabled"
   @change="onChange">
-  <option v-for="item in input.values"
+  <option v-for="(item, i) in input.values"
+    :key="i"
     :value="item.value"
     :selected="input.defaultValue.indexOf(item.value) > -1">
     {{item.label}}

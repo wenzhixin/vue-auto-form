@@ -6,7 +6,8 @@
   multiple
   v-model="currentValue"
   @change="onChange">
-  <el-option v-for="item in input.values"
+  <el-option v-for="(item, i) in input.values"
+    :key="i"
     :value="item.value"
     :label="item.label"/>
 </el-select>
