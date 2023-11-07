@@ -26,7 +26,7 @@ import AutoForm from 'vue-auto-form'
 ```vue
 <template>
 <auto-form :schema="schema" :model="model" @submit="onSubmit"></auto-form>
-</teamplte>
+</template>
 
 <script>
 import AutoForm from 'vue-auto-form'
